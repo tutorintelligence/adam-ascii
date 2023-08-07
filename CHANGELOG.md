@@ -2,6 +2,25 @@
 
 
 
+## v0.1.2 (2023-08-07)
+
+### Chore
+
+* chore: refactor to object inerface ([`f0de1c2`](https://github.com/tutorintelligence/adam-modbus/commit/f0de1c2e432ded96b75b96401032a57d797f1c7c))
+
+* chore: more flexible interface ([`0244fb4`](https://github.com/tutorintelligence/adam-modbus/commit/0244fb4cc61024a71a3dda761798b64b6afafc30))
+
+* chore: more flexible interface ([`4fbd036`](https://github.com/tutorintelligence/adam-modbus/commit/4fbd03656afadc859f624f88e7e455d3b9596efb))
+
+### Fix
+
+* fix: trigger a version bump ([`5470820`](https://github.com/tutorintelligence/adam-modbus/commit/54708204fbdff430c2b43cc5a0be23be0ce84831))
+
+### Unknown
+
+* Merge branch &#39;main&#39; of github.com:tutorintelligence/adam_modbus ([`71d4a80`](https://github.com/tutorintelligence/adam-modbus/commit/71d4a805b874d08b5610790404143cc36713e89e))
+
+
 ## v0.1.1 (2023-08-07)
 
 ### Fix
