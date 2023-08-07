@@ -4,6 +4,7 @@ version = "0.0.1"
 description = "asyncio python interface for Advantech ADAM modules"
 authors = ["Josh Gruenstein <josh@tutorintelligence.com>"]
 license = "MIT"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
