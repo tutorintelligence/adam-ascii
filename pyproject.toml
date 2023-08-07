@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "adam-modbus"
-version = "0.1.2"
+version = "0.1.3"
 description = "asyncio python interface for Advantech ADAM modules"
 authors = ["Josh Gruenstein <josh@tutorintelligence.com>"]
 license = "MIT"

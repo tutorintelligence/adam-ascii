@@ -2,6 +2,13 @@
 
 
 
+## v0.1.3 (2023-08-07)
+
+### Fix
+
+* fix: updates to poetry configuration ([`51cb567`](https://github.com/tutorintelligence/adam-modbus/commit/51cb567d332befadca1fc656bf49189553694049))
+
+
 ## v0.1.2 (2023-08-07)
 
 ### Chore
