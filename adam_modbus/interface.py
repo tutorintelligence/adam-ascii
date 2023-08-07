@@ -9,13 +9,14 @@ class AdamConnectionError(RuntimeError):
     pass
 
 
-ADAM_PORT = 1025
+DEFAULT_ADAM_PORT = 1025
 ADAM_CONNECTION_TIMEOUT = 0.1
 
 
 @asynccontextmanager
 async def adam_socket_context(
     ip: str,
+    port: int = DEFAULT_ADAM_PORT,
 ) -> AsyncIterator[socket.socket]:
     adam_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -26,21 +27,20 @@ async def adam_socket_context(
     adam_sock.setblocking(False)
 
     try:
-        await loop.sock_connect(adam_sock, (ip, ADAM_PORT))
+        await loop.sock_connect(adam_sock, (ip, port))
         yield adam_sock
 
-    # TODO: are these right now that this is async?
-    except (TimeoutError, OSError, asyncio.TimeoutError):
+    except OSError:
         raise AdamConnectionError(f"Could not connect to ADAM at {ip}")
 
     finally:
         adam_sock.close()
 
 
-async def _adam_send_and_receive(message: str, ip: str) -> str:
-    async with adam_socket_context(ip) as adam_socket:
-        loop = asyncio.get_running_loop()
+async def _adam_send_and_receive(message: str, adam_socket: socket.socket) -> str:
+    loop = asyncio.get_running_loop()
 
+    try:
         await asyncio.wait_for(
             loop.sock_sendall(adam_socket, message.encode("ascii")),
             ADAM_CONNECTION_TIMEOUT,
@@ -48,13 +48,18 @@ async def _adam_send_and_receive(message: str, ip: str) -> str:
         adam_out = await asyncio.wait_for(
             loop.sock_recv(adam_socket, 100), ADAM_CONNECTION_TIMEOUT
         )
+    except asyncio.TimeoutError:
+        raise AdamConnectionError("ADAM connection timed out")
 
-        response = adam_out.decode().strip()
-        return response
+    response = adam_out.decode().strip()
+    return response
 
 
 async def set_adam_digital_out(
-    ip: str, model: Literal["6052"] | Literal["6317"], pin: int, value: bool
+    socket: socket.socket,
+    model: Literal["6052"] | Literal["6317"],
+    pin: int,
+    value: bool,
 ) -> None:
     if model == "6052":
         command = f"#011{pin:x}0{int(value)}\r"
@@ -63,20 +68,20 @@ async def set_adam_digital_out(
     else:
         assert_never(model)
 
-    response = await _adam_send_and_receive(command, ip)
+    response = await _adam_send_and_receive(command, socket)
     assert response[:3] == ">01", response[:3]
 
 
-async def get_adam_digital_inputs(ip: str) -> list[bool]:
-    response = await _adam_send_and_receive("$016\r", ip)
+async def get_adam_digital_inputs(socket: socket.socket) -> list[bool]:
+    response = await _adam_send_and_receive("$016\r", socket)
     assert response[:3] == "!01", f"Unexpected response: {response}"
 
     binary_string = "".join(f"{int(char, 16):0>4b}" for char in response[3:])
     return [char == "1" for char in binary_string][::-1]
 
 
-async def get_adam_analog_inputs(ip: str) -> list[float]:
-    response = await _adam_send_and_receive("#01\r", ip)
+async def get_adam_analog_inputs(socket: socket.socket) -> list[float]:
+    response = await _adam_send_and_receive("#01\r", socket)
 
     assert response[:3] == ">01", response
     response_data = response[3:]
@@ -89,8 +94,8 @@ async def get_adam_analog_inputs(ip: str) -> list[float]:
     ]
 
 
-async def get_adam_model(ip: str) -> str:
-    response = await _adam_send_and_receive("$01M\r", ip)
+async def get_adam_model(socket: socket.socket) -> str:
+    response = await _adam_send_and_receive("$01M\r", socket)
 
     assert response[:3] == "!01", f"Unexpected response: {response}"
 
