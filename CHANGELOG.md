@@ -2,6 +2,17 @@
 
 
 
+## v0.1.4 (2023-08-07)
+
+### Chore
+
+* chore: add pypi to readme ([`1f0a7db`](https://github.com/tutorintelligence/adam-modbus/commit/1f0a7dbcd2ec8a30cc8905f17d0f08040282ce27))
+
+### Fix
+
+* fix: py.typed file to propogate hints ([`a85c2dc`](https://github.com/tutorintelligence/adam-modbus/commit/a85c2dcc6244a55a61a4692fc25571ed3048fda8))
+
+
 ## v0.1.3 (2023-08-07)
 
 ### Fix
