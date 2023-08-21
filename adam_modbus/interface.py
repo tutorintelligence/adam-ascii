@@ -92,6 +92,10 @@ class AdamConnection:
 
         return self.model
 
+    async def enable_high_speed_analog_integration(self) -> None:
+        response = await self._send_and_receive("%0100000020\r")
+        assert response[:3] == "!01", f"Unexpected response: {response}"
+
 
 @asynccontextmanager
 async def adam_connection_context(
