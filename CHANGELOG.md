@@ -2,6 +2,13 @@
 
 
 
+## v0.2.0 (2023-08-21)
+
+### Feature
+
+* feat: enable high speed analog integration ([`197ccba`](https://github.com/tutorintelligence/adam-modbus/commit/197ccbad6831db7f030462ddc468ab6d996ad7c6))
+
+
 ## v0.1.4 (2023-08-07)
 
 ### Chore
