@@ -2,6 +2,19 @@
 
 
 
+## v0.3.0 (2023-09-13)
+
+### Feature
+
+* feat: send_and_receive is atomic ([`39e2fa3`](https://github.com/tutorintelligence/adam-modbus/commit/39e2fa3d5990a7d99eaa2afbb216e752d3d4afbf))
+
+### Unknown
+
+* Merge pull request #1 from tutorintelligence/adam_connection_locks
+
+feat: send_and_receive is atomic ([`e3860c9`](https://github.com/tutorintelligence/adam-modbus/commit/e3860c9a5246cc2f0266eab2cd037ec5179ddef1))
+
+
 ## v0.2.0 (2023-08-21)
 
 ### Feature
