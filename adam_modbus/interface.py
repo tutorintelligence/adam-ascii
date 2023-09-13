@@ -1,9 +1,10 @@
 import asyncio
 import socket
+from collections import defaultdict
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
-from typing import Literal
+from typing import ClassVar, Literal
 
 
 class AdamConnectionError(RuntimeError):
@@ -22,22 +23,28 @@ class AdamConnection:
     timeout: float = ADAM_CONNECTION_TIMEOUT
     model: str | None = None
 
+    # ClassVar so it's shared among all AdamConnections
+    ADAM_CONNECTION_LOCKS: ClassVar = defaultdict[tuple[str, int], asyncio.Lock](
+        lambda: asyncio.Lock()
+    )
+
     async def _send_and_receive(self, message: str) -> str:
-        loop = asyncio.get_running_loop()
+        async with self.ADAM_CONNECTION_LOCKS[(self.ip, self.port)]:
+            loop = asyncio.get_running_loop()
 
-        try:
-            await asyncio.wait_for(
-                loop.sock_sendall(self.socket, message.encode("ascii")),
-                self.timeout,
-            )
-            adam_out = await asyncio.wait_for(
-                loop.sock_recv(self.socket, 100), self.timeout
-            )
-        except asyncio.TimeoutError:
-            raise AdamConnectionError("ADAM connection timed out")
+            try:
+                await asyncio.wait_for(
+                    loop.sock_sendall(self.socket, message.encode("ascii")),
+                    self.timeout,
+                )
+                adam_out = await asyncio.wait_for(
+                    loop.sock_recv(self.socket, 100), self.timeout
+                )
+            except asyncio.TimeoutError:
+                raise AdamConnectionError("ADAM connection timed out")
 
-        response = adam_out.decode().strip()
-        return response
+            response = adam_out.decode().strip()
+            return response
 
     async def set_digital_out(
         self,
