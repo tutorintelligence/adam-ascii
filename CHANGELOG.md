@@ -2,6 +2,27 @@
 
 
 
+## v0.3.1 (2023-11-29)
+
+### Fix
+
+* fix: repr for errors ([`17822a8`](https://github.com/tutorintelligence/adam-modbus/commit/17822a877709e8620a78cf692073a14a83782a54))
+
+### Unknown
+
+* Merge pull request #3 from tutorintelligence/os_error_handling
+
+fix: Adam connection error style ([`1feb6b9`](https://github.com/tutorintelligence/adam-modbus/commit/1feb6b9b692f2962c4b8bfe5bb372ac4f83c7468))
+
+* error names ([`dad4d5e`](https://github.com/tutorintelligence/adam-modbus/commit/dad4d5e5c2c5d1722619c68a856eb987ffb59634))
+
+* Merge pull request #2 from tutorintelligence/os_error_handling
+
+fix: handling os errors ([`5ecf282`](https://github.com/tutorintelligence/adam-modbus/commit/5ecf2827f5160ecb9165cf7a8023f170ce67de6e))
+
+* handling os errors ([`1bc7e6d`](https://github.com/tutorintelligence/adam-modbus/commit/1bc7e6db73b23fcb7554495585d2e66ca2955151))
+
+
 ## v0.3.0 (2023-09-13)
 
 ### Feature
