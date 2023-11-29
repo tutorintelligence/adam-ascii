@@ -41,7 +41,10 @@ class AdamConnection:
                     loop.sock_recv(self.socket, 100), self.timeout
                 )
             except asyncio.TimeoutError:
-                raise AdamConnectionError("ADAM connection timed out")
+                raise AdamConnectionError("ADAM connection timed out (asyncio.TimeoutError))")
+            
+            except OSError:
+                raise AdamConnectionError("ADAM connection failed (OSError))")
 
             response = adam_out.decode().strip()
             return response
