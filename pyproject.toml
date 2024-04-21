@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "adam-modbus"
+name = "adam-ascii"
 version = "0.3.1"
 description = "asyncio python interface for Advantech ADAM modules"
 authors = ["Josh Gruenstein <josh@tutorintelligence.com>"]
@@ -24,6 +24,6 @@ build-backend = "poetry.core.masonry.api"
 style = "poetry_scripts:style"
 
 [tool.semantic_release]
-version_variables = ["adam_modbus/__init__.py:__version__"]
+version_variables = ["adam_ascii/__init__.py:__version__"]
 version_toml = ["pyproject.toml:tool.poetry.version"]
 build_command = "pip install poetry && poetry build"
