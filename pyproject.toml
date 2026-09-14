@@ -21,7 +21,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-style = "poetry_scripts:style"
+adam-ascii-style = "poetry_scripts:style"
 
 [tool.semantic_release]
 version_variables = ["adam_ascii/__init__.py:__version__"]
